@@ -1,0 +1,55 @@
+<!--
+  ~ Copyright 2021, codingchapters, All rights reserved.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<idea-plugin url="https://codingchapters.com"
+             xmlns:xi="http://www.w3.org/2001/XInclude"
+             require-restart="false">
+    <id>com.codingchapters.example</id>
+    <name>MinimalCodeBook</name>
+    <version>2023.2.27.1</version>
+    <vendor url="https://codingchapters.com">CodingChapters</vendor>
+    <description>
+        <![CDATA[
+        Minimal CodingChapters Plugin provides a
+        simple plugin to discuss verification results
+        of https://plugins.jetbrains.com/plugin/24114-codebook/edit/versions/stable/522059
+        that were generated when uploading codebook plugin to marketplace
+      ]]>
+    </description>
+    <idea-version since-build="233.13135" until-build="233.*"/>
+
+    <depends>com.intellij.modules.java</depends>
+    <depends>org.intellij.scala</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService id="projectBrowserWindowService"
+                        serviceImplementation="com.codingchapters.isplugin.BookWindowComponentsService"/>
+
+        <projectTemplatesFactory implementation="com.codingchapters.isplugin.CodingChaptersProjectTemplatesFactory"
+                                 order="first"/>
+
+        <toolWindow factoryClass="com.codingchapters.isplugin.BookToolWindowFactory" id="book-tool-window-id"
+                    anchor="right"/>
+
+        <programRunner implementation="com.codingchapters.isplugin.CodingChaptersJavaProgramRunner"/>
+    </extensions>
+
+    <actions>
+
+        <action class="com.codingchapters.isplugin.ExecuteExerciseAction" id="VerifyActionId"/>
+
+    </actions>
+
+</idea-plugin>
