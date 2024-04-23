@@ -10,7 +10,7 @@ libraryDependencies ++= Seq(
 )
 
 Compile / unmanagedSourceDirectories ++= Seq(
-  baseDirectory.value / "01-java-reflection",
+  //baseDirectory.value / "01-java-reflection",
   baseDirectory.value / "02-intellij-commons",
   baseDirectory.value / "11-new-chapter-wizard",
   baseDirectory.value / "21-codingchapters-toolwindow",

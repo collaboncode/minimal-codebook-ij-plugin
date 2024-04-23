@@ -10,7 +10,7 @@ class JdkStepSettings(settingsStep: SettingsStep,
                       chapterBuilder: SelectChapterBuilder,
                       sdkTypeIdFilter: Condition[_ >: SdkTypeId],
                       supportedJdkMajorVersion: Int)
-  extends SdkSettingsStep(settingsStep, chapterBuilder, sdkTypeIdFilter) with PrivateAccess {
+  extends SdkSettingsStep(settingsStep, chapterBuilder, sdkTypeIdFilter)  {
 
   override def validate(): Boolean = {
 

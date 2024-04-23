@@ -8,7 +8,7 @@ import com.intellij.openapi.wm.{ToolWindow, ToolWindowFactory}
 import java.awt.BorderLayout
 import javax.swing.JPanel
 
-class BookToolWindowFactory extends ToolWindowFactory with DumbAware {
+class BookToolWindowFactory extends SToolWindowFactory with DumbAware {
 
   private val logger = Logger.getInstance(classOf[BookToolWindowFactory])
 

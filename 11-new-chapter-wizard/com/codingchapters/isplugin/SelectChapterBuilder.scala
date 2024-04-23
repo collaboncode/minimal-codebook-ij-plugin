@@ -2,6 +2,7 @@ package com.codingchapters.isplugin
 
 import better.files.Dsl.mkdirs
 import better.files.File
+
 import com.intellij.ide.projectWizard.ProjectSettingsStep
 import com.intellij.ide.util.projectWizard._
 import com.intellij.openapi.module
@@ -10,11 +11,10 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.projectRoots.{JavaSdk, SdkTypeId}
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider
 import com.intellij.openapi.ui.Messages
-
 import javax.swing.JLabel
 import scala.util.Try
 
-class SelectChapterBuilder extends BaseSbtBuilder with PrivateAccess with CodeTemplate {
+class SelectChapterBuilder extends BaseSbtBuilder with CodeTemplate {
 
   override def getModuleType: ModuleType[_] = JavaModuleType.getModuleType
 
@@ -70,6 +70,13 @@ class SelectChapterBuilder extends BaseSbtBuilder with PrivateAccess with CodeTe
     mkdirs(root)
     val pomFile = root / "pom.xml"
     pomFile.append(pomContent)
+
+    val code = specCode()
+    val pkgDir = root / "src" / "test" / "scala" / "com" / "example" / "specs"
+    mkdirs(pkgDir)
+    val specFile = pkgDir /"ConnectToServerAndTakesSomeTimeSimulationSpec.scala"
+    specFile.append(code)
+
     super.createModule(moduleModel)
   }
 }

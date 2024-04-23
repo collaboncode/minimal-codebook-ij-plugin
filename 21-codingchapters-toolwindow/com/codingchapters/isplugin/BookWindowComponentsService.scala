@@ -14,7 +14,7 @@ import javax.swing.{Icon, JCheckBox, JLabel}
 
 class BookWindowComponentsService(val project: Project) {
 
-  project.getMessageBus.connect.subscribe(ToolWindowManagerListener.TOPIC, BookToolWindowManagerListener(project))
+  project.getMessageBus.connect.subscribe(ToolWindowManagerListener.TOPIC, new BookToolWindowManagerListener())
 
   private def actionWithIcon(actionId: String, tooltip: String, icon: Icon): AnAction = {
     val action = ActionManager.getInstance().getAction(actionId)
