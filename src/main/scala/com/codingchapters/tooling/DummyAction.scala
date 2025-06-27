@@ -3,22 +3,8 @@ package com.codingchapters.tooling
 import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent, DefaultActionGroup}
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.wm.ToolWindowManager
-import org.jetbrains.plugins.scala.testingSupport.test.testdata.ClassTestData
-
-import scala.util.{Failure, Success, Try}
 
 class DummyAction extends AnAction("Show Current Time", "Display current time in browser", null) {
-
-  private def strToInt(str : String) : Either[String, Int] = {
-    Try(str.toInt) match {
-      case Failure(exception) => Left(s"$str is not a number")
-      case Success(value) => Right(value)
-    }
-  }
-
-  private def someLogicThatUsedScalaPluginClasses() : Unit = {
-    val classTestData : ClassTestData = ClassTestData(null, "")
-  }
 
   override def actionPerformed(e: AnActionEvent): Unit = {
     val project = e.getProject
@@ -35,12 +21,13 @@ class DummyAction extends AnAction("Show Current Time", "Display current time in
         if (contentManager.getContentCount > 0) {
           val content = contentManager.getContent(0)
           if (content != null) {
-            // Get the TimeToolWindow instance from user data
-            val timeToolWindow = content.getUserData(TimeToolWindow.KEY)
-            if (timeToolWindow != null) {
+            // Get the browser instance from user data
+            val browser = content.getUserData(TimeToolWindow.KEY)
+            if (browser != null) {
+              val timeToolWindow = new TimeToolWindow(browser)
               timeToolWindow.updateTime()
             } else {
-              Messages.showInfoMessage("TimeToolWindow instance not found in content.", "Error")
+              Messages.showInfoMessage("Browser instance not found in content.", "Error")
             }
           }
         }
@@ -49,10 +36,6 @@ class DummyAction extends AnAction("Show Current Time", "Display current time in
       }
     }
 
-    val e1: Either[String, Int] = strToInt("2")
-    val e2: Either[String, Int] = strToInt("two")
-
-    someLogicThatUsedScalaPluginClasses()
 
     Messages.showInfoMessage("Time updated in browser window", "Current Time Display")
   }

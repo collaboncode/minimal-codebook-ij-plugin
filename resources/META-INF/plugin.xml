@@ -24,10 +24,7 @@
     </extensions>
 
     <actions>
-        <group id="TimeToolsGroup" class="com.codingchapters.tooling.DummyActionGroup" text="Time Tools" description="Time related tools">
-            <add-to-group group-id="MainToolBar" anchor="last"/>
-            <action class="com.codingchapters.tooling.DummyAction" text="Show Current Time" id="DummyActionId" description="Display current time in browser window" icon="AllIcons.General.Calendar"/>
-        </group>
+        <!-- Actions are now handled within the tool window toolbar -->
     </actions>
 
 </idea-plugin>

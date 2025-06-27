@@ -5,6 +5,7 @@ import com.intellij.openapi.wm.{ToolWindow, ToolWindowFactory}
 import com.intellij.ui.content.ContentFactory
 import com.intellij.ui.jcef.JBCefBrowser
 import com.intellij.openapi.util.Key
+import com.intellij.openapi.actionSystem.{ActionManager, ActionPlaces}
 import javax.swing.JPanel
 import java.awt.BorderLayout
 import java.time.LocalDateTime
@@ -13,30 +14,35 @@ import java.time.format.DateTimeFormatter
 class TimeToolWindowFactory extends ToolWindowFactory {
   
   override def createToolWindowContent(project: Project, toolWindow: ToolWindow): Unit = {
-    val timeToolWindow = new TimeToolWindow()
-    val content = ContentFactory.getInstance().createContent(timeToolWindow.getContent, "", false)
+    val browser = new JBCefBrowser()
+    val timeToolWindow = new TimeToolWindow(browser)
     
-    // Store the TimeToolWindow instance in the content's user data for later access
-    content.putUserData(TimeToolWindow.KEY, timeToolWindow)
+    // Create the toolbar
+    val toolBarActionGroup = new com.codingchapters.tooling.DummyActionGroup()
+    val toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.TOOLWINDOW_TITLE, toolBarActionGroup, true)
+    
+    // Create main panel and add toolbar and browser
+    val mainPanel = new JPanel(new BorderLayout())
+    mainPanel.add(toolbar.getComponent, BorderLayout.NORTH)
+    mainPanel.add(browser.getComponent, BorderLayout.CENTER)
+    
+    val content = ContentFactory.getInstance().createContent(mainPanel, "", false)
+    
+    // Store the browser instance in the content's user data for later access
+    content.putUserData(TimeToolWindow.KEY, browser)
     
     toolWindow.getContentManager.addContent(content)
+    
+    // Initialize the time display
+    timeToolWindow.updateTime()
   }
 }
 
 object TimeToolWindow {
-  val KEY: Key[TimeToolWindow] = Key.create("TimeToolWindow")
+  val KEY: Key[JBCefBrowser] = Key.create("TimeToolWindowBrowser")
 }
 
-class TimeToolWindow {
-  private val browser = new JBCefBrowser()
-  private val panel = new JPanel(new BorderLayout())
-  
-  init()
-  
-  private def init(): Unit = {
-    panel.add(browser.getComponent, BorderLayout.CENTER)
-    updateTime()
-  }
+class TimeToolWindow(browser: JBCefBrowser) {
   
   def updateTime(): Unit = {
     val currentTime = LocalDateTime.now()
@@ -89,7 +95,4 @@ class TimeToolWindow {
     browser.loadHTML(html)
   }
   
-  def getContent: JPanel = panel
-  
-  def getBrowser: JBCefBrowser = browser
 }
