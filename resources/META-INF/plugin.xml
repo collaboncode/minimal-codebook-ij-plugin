@@ -16,14 +16,18 @@
     <depends>com.intellij.modules.java</depends>
     <depends>org.intellij.scala</depends>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="TimeWindow" 
+                    secondary="true" 
+                    anchor="right" 
+                    factoryClass="com.codingchapters.tooling.TimeToolWindowFactory"/>
+    </extensions>
+
     <actions>
-
-
-        <action class="com.codingchapters.tooling.DummyAction" text="dum dum" id="DummyActionId">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
-        </action>
-
-
+        <group id="TimeToolsGroup" class="com.codingchapters.tooling.DummyActionGroup" text="Time Tools" description="Time related tools">
+            <add-to-group group-id="MainToolBar" anchor="last"/>
+            <action class="com.codingchapters.tooling.DummyAction" text="Show Current Time" id="DummyActionId" description="Display current time in browser window" icon="AllIcons.General.Calendar"/>
+        </group>
     </actions>
 
 </idea-plugin>
