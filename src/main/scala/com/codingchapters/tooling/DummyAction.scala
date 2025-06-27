@@ -1,11 +1,11 @@
 package com.codingchapters.tooling
 
-import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent}
+import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.wm.ToolWindowManager
 
-class DummyAction extends AnAction("Show Current Time", "Display current time in browser", null) with TimeHtmlGenerator {
+class DummyAction extends BaseAction with TimeHtmlGenerator {
 
-  override def actionPerformed(e: AnActionEvent): Unit = {
+  override def execute(e: AnActionEvent): Unit = {
     val project = e.getProject
     if (project != null) {
       val toolWindow = ToolWindowManager.getInstance(project).getToolWindow("TimeWindow")
