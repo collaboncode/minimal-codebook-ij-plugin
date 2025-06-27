@@ -8,14 +8,11 @@ import com.intellij.openapi.util.Key
 import com.intellij.openapi.actionSystem.{ActionManager, ActionPlaces}
 import javax.swing.JPanel
 import java.awt.BorderLayout
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
-class TimeToolWindowFactory extends ToolWindowFactory {
+class TimeToolWindowFactory extends ToolWindowFactory with TimeHtmlGenerator {
   
   override def createToolWindowContent(project: Project, toolWindow: ToolWindow): Unit = {
     val browser = new JBCefBrowser()
-    val timeToolWindow = new TimeToolWindow(browser)
     
     // Create the toolbar
     val toolBarActionGroup = new com.codingchapters.tooling.DummyActionGroup()
@@ -34,65 +31,10 @@ class TimeToolWindowFactory extends ToolWindowFactory {
     toolWindow.getContentManager.addContent(content)
     
     // Initialize the time display
-    timeToolWindow.updateTime()
+    browser.loadHTML(generateTimeHtml())
   }
 }
 
 object TimeToolWindow {
   val KEY: Key[JBCefBrowser] = Key.create("TimeToolWindowBrowser")
-}
-
-class TimeToolWindow(browser: JBCefBrowser) {
-  
-  def updateTime(): Unit = {
-    val currentTime = LocalDateTime.now()
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-    val formattedTime = currentTime.format(formatter)
-    
-    val html = s"""
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Current Time</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-          }
-          .time-container {
-            text-align: center;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-          }
-          .time {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-          }
-          .label {
-            font-size: 16px;
-            color: #666;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="time-container">
-          <div class="label">Current Time</div>
-          <div class="time">$formattedTime</div>
-        </div>
-      </body>
-      </html>
-    """
-    
-    browser.loadHTML(html)
-  }
-  
 }
