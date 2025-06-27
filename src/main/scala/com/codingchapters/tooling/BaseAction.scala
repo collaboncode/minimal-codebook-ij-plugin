@@ -6,7 +6,14 @@ import com.intellij.openapi.application.ApplicationManager
 trait BaseAction extends AnAction {
 
   override final def actionPerformed(e: AnActionEvent): Unit = {
-    ApplicationManager.getApplication.invokeLater(() => execute(e))
+    val application = ApplicationManager.getApplication
+    if (application.isDispatchThread) {
+      // Already on EDT, execute directly
+      execute(e)
+    } else {
+      // Not on EDT, invoke later
+      application.invokeLater(() => execute(e))
+    }
   }
 
   def execute(e: AnActionEvent): Unit

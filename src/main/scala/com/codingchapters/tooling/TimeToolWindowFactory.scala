@@ -37,6 +37,9 @@ class TimeToolWindowFactory extends ToolWindowFactory with TimeHtmlGenerator {
     mainPanel.add(toolbar.getComponent, BorderLayout.NORTH)
     mainPanel.add(browser.getComponent, BorderLayout.CENTER)
     
+    // Set the target component for the toolbar to fix the warning
+    toolbar.setTargetComponent(mainPanel)
+    
     val content = ContentFactory.getInstance().createContent(mainPanel, "", false)
     
     // Store the browser instance in the content's user data for later access
