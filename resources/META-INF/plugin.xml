@@ -3,7 +3,7 @@
              require-restart="false">
     <id>com.codingchapters.main</id>
     <name>CodeBook</name>
-    <version>2025.1.24</version>
+    <version>2025.1.27</version>
     <vendor url="https://codingchapters.com">CodingChapters</vendor>
     <description>
         <![CDATA[
@@ -11,7 +11,7 @@
         technical presentations
       ]]>
     </description>
-    <idea-version since-build="251.25410" until-build="251.*"/>
+    <idea-version since-build="251.26927" until-build="251.*"/>
 
     <depends>com.intellij.modules.java</depends>
     <depends>org.intellij.scala</depends>
