@@ -23,10 +23,10 @@ pathExcludeFilter := { path => path.toString.endsWith(".tasty") }
 
 lazy val scalaIntellij = project.in(file("."))
   //https://github.com/JetBrains/sbt-idea-plugin/issues/139#issuecomment-2867677170
-//  .settings(
-//    packageLibraryMappings ++= Seq(
-//      "org.scala-lang"  % "scala-.*" % ".*"        -> None,
-//      "org.scala-lang.modules" % "scala-.*" % ".*" -> None
-//    )
-//  )
+  .settings(
+    packageLibraryMappings ++= Seq(
+      "org.scala-lang"  % "scala.*" % ".*"        -> None,
+      "org.scala-lang.modules" % "scala.*" % ".*" -> None
+    )
+  )
   .enablePlugins(SbtIdeaPlugin)

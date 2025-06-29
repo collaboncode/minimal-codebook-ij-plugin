@@ -8,14 +8,14 @@ import scala.util.{Failure, Success, Try}
 
 class DummyAction extends AnAction{
 
-  private def strToInt(str : String) : Either[String, Int] = {
+  private inline def strToInt(str : String) : Either[String, Int] = {
     Try(str.toInt) match {
       case Failure(exception) => Left(s"$str is not a number")
       case Success(value) => Right(value)
     }
   }
 
-  private def someLogicThatUsedScalaPluginClasses() : Unit = {
+  private inline def someLogicThatUsedScalaPluginClasses() : Unit = {
     val classTestData : ClassTestData = ClassTestData(null, "")
   }
 
