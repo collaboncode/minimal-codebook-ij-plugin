@@ -15,3 +15,9 @@ that were generated when uploading codebook plugin to marketplace
 
 upload generated zip inside `target` directory   
 to marketplace for verification
+
+---
+
+also, for debugging, you may have to add below to run configuration vm options :-
+
+`--add-opens=java.desktop/javax.swing.text.html.parser=ALL-UNNAMED`
