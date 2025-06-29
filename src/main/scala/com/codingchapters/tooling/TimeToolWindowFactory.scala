@@ -13,12 +13,11 @@ import java.awt.BorderLayout
 
 class TimeToolWindowFactory extends ToolWindowFactory with TimeHtmlGenerator {
 
-  implicit class ToolbarActionExtensions(baseAction: BaseAction) {
+  implicit class ToolbarActionExtensions(toolbarAction: BaseAction) {
     def withIcon(tooltip: String, icon: javax.swing.Icon): AnAction = {
-      val newAction: DummyAction = new DummyAction()
-      newAction.getTemplatePresentation.setIcon(icon)
-      newAction.getTemplatePresentation.setText(tooltip)
-      newAction
+      toolbarAction.getTemplatePresentation.setIcon(icon)
+      toolbarAction.getTemplatePresentation.setText(tooltip)
+      toolbarAction
     }
   }
 
