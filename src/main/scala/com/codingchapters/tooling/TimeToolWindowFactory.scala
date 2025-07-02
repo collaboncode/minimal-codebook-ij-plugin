@@ -1,19 +1,19 @@
 package com.codingchapters.tooling
 
 import com.intellij.icons.AllIcons
+import com.intellij.openapi.actionSystem.{ActionManager, ActionPlaces, AnAction, DefaultActionGroup}
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.Key
 import com.intellij.openapi.wm.{ToolWindow, ToolWindowFactory}
 import com.intellij.ui.content.ContentFactory
 import com.intellij.ui.jcef.JBCefBrowser
-import com.intellij.openapi.util.Key
-import com.intellij.openapi.actionSystem.{ActionManager, ActionPlaces, AnAction, DefaultActionGroup}
 
-import javax.swing.JPanel
 import java.awt.BorderLayout
+import javax.swing.JPanel
 
 class TimeToolWindowFactory extends ToolWindowFactory with TimeHtmlGenerator {
 
-  implicit class ToolbarActionExtensions(toolbarAction: BaseAction) {
+  implicit class ToolbarActionExtensions(toolbarAction: AnAction) {
     def withIcon(tooltip: String, icon: javax.swing.Icon): AnAction = {
       toolbarAction.getTemplatePresentation.setIcon(icon)
       toolbarAction.getTemplatePresentation.setText(tooltip)
@@ -21,12 +21,17 @@ class TimeToolWindowFactory extends ToolWindowFactory with TimeHtmlGenerator {
     }
   }
 
+  override def init(toolWindow: ToolWindow): Unit = {
+    toolWindow.setIcon(AllIcons.Nodes.Tag)
+    toolWindow.setStripeTitle("Current Time")
+  }
+
   override def createToolWindowContent(project: Project, toolWindow: ToolWindow): Unit = {
     val browser = new JBCefBrowser()
 
     val toolBarActionGroup = new DefaultActionGroup()
 
-    val timeAction = new DummyAction().withIcon("Show Current Time", AllIcons.General.Information)
+    val timeAction = new RefreshTimeAction().withIcon("Show Current Time", AllIcons.General.Information)
     toolBarActionGroup.addAction(timeAction)
 
     val toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.TOOLWINDOW_TITLE, toolBarActionGroup, true)
@@ -47,7 +52,7 @@ class TimeToolWindowFactory extends ToolWindowFactory with TimeHtmlGenerator {
     toolWindow.getContentManager.addContent(content)
     
     // Initialize the time display
-    browser.loadHTML(generateTimeHtml())
+    browser.loadHTML(timeString())
   }
 }
 

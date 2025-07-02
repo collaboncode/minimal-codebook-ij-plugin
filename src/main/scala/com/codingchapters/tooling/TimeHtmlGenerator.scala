@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 
 trait TimeHtmlGenerator {
   
-  def generateTimeHtml(): String = {
+  def timeString(): String = {
     val currentTime = LocalDateTime.now()
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     val formattedTime = currentTime.format(formatter)
