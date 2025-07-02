@@ -1,6 +1,6 @@
 name := "minimal-ic-plugin"
 organization := "com.codogenic"
-version := "2025.1.27.3"
+version := "2025.1.27.4"
 scalaVersion := "3.3.5"
 
 
@@ -25,6 +25,12 @@ lazy val scalaIntellij = project.in(file("."))
     packageLibraryMappings ++= Seq(
       "org.scala-lang"  % "scala-.*" % ".*"        -> None,
       "org.scala-lang.modules" % "scala-.*" % ".*" -> None
+    ),
+    // Add Java source directories
+    Compile / unmanagedSourceDirectories += baseDirectory.value / "src" / "main" / "java",
+    // Add IntelliJ Platform dependencies for Java compilation
+    libraryDependencies ++= Seq(
+      "org.jetbrains" % "annotations" % "24.0.1" % "provided"
     )
   )
   .enablePlugins(SbtIdeaPlugin)
