@@ -3,7 +3,7 @@
              require-restart="false">
     <id>com.codingchapters.main</id>
     <name>CodeBook</name>
-    <version>2025.1.27</version>
+    <version>2025.1.27.3</version>
     <vendor url="https://codingchapters.com">CodingChapters</vendor>
     <description>
         <![CDATA[
