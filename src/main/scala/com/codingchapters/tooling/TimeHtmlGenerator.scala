@@ -3,9 +3,9 @@ package com.codingchapters.tooling
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-trait TimeHtmlGenerator {
+object TimeHtmlGenerator {
   
-  def timeString(): String = {
+  def timeHtmlString(): String = {
     val currentTime = LocalDateTime.now()
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     val formattedTime = currentTime.format(formatter)

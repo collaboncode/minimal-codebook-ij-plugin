@@ -11,7 +11,7 @@ import com.intellij.ui.jcef.JBCefBrowser
 import java.awt.BorderLayout
 import javax.swing.JPanel
 
-class TimeToolWindowFactory extends ToolWindowFactory with TimeHtmlGenerator {
+class TimeToolWindowFactory extends ToolWindowFactory {
 
   implicit class ToolbarActionExtensions(toolbarAction: AnAction) {
     def withIcon(tooltip: String, icon: javax.swing.Icon): AnAction = {
@@ -52,7 +52,7 @@ class TimeToolWindowFactory extends ToolWindowFactory with TimeHtmlGenerator {
     toolWindow.getContentManager.addContent(content)
     
     // Initialize the time display
-    browser.loadHTML(timeString())
+    browser.loadHTML(TimeHtmlGenerator.timeHtmlString())
   }
 }
 

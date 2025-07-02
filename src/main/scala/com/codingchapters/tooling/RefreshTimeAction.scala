@@ -5,7 +5,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.ui.jcef.JBCefBrowser
 
-class RefreshTimeAction extends AnAction with TimeHtmlGenerator {
+class RefreshTimeAction extends AnAction {
 
   override def actionPerformed(e: AnActionEvent): Unit = {
     val result = for {
@@ -13,7 +13,7 @@ class RefreshTimeAction extends AnAction with TimeHtmlGenerator {
 
       br <- toolWindowBrowser(project)
 
-    } yield br.loadHTML(timeString())
+    } yield br.loadHTML(TimeHtmlGenerator.timeHtmlString())
     
     // Result is Option[Unit], automatically handles all null cases
     result.getOrElse(()) // Do nothing if any step fails
