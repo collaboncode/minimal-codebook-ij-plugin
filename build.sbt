@@ -1,6 +1,6 @@
 name := "minimal-ic-plugin"
 organization := "com.codogenic"
-version := "2025.1.27s.1"
+version := "2025.1.27.1"
 scalaVersion := "3.3.5"
 
 
